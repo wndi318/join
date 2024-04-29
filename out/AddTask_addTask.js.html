@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: AddTask/addTask.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: AddTask/addTask.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>let todos = [];
+let subtasks = [];
+let contactsObject = [];
+let contactsAddTask = [];
+
+
+async function initTask() {
+    todos = JSON.parse(await getItem('todos')) || [];
+
+    contactsAddTask = JSON.parse(await getItem('contacts')) || [];
+    await showContacts();
+    await getInitials();
+    displayOptions();
+    await setMinDate();
+
+}
+
+/**
+ * Adds a new todo to the todos array, with the information of the inputfields.
+ */
+async function addTodo() {
+    let todo = 'to-do';
+
+    var urlParams = new URLSearchParams(window.location.search);
+    
+    if (urlParams.has('urlParam')) {
+        var paramValue = urlParams.get('urlParam');
+        todo = paramValue;
+    }
+
+    create.disabled = true;
+    todos_length = JSON.parse(await getItem('todos')) || [];
+    let newTodoId = todos_length.length - 1;
+    newTodoId++;
+
+    todos.push({
+        id: newTodoId,
+        title: title.value,
+        description: descritpion.value,
+        category: category.value,
+        subtasks: subtasks,
+        contacts: contactsObject,
+        status: todo,
+        priority: selectedPriority,
+        date: selectedDate.value
+    });
+
+    await setItem('todos', JSON.stringify(todos));
+
+    createTask();
+}
+
+/**
+ * Represents the selected priority for a task. Default value is 'Medium'.
+ *
+ * @type {string}
+ */
+let selectedPriority = 'Medium';
+
+/**
+ * Sets the selected priority to 'Urgent' and updates the visual styling for the priority buttons.
+ */
+function priorityUrgent() {
+    selectedPriority = 'Urgent';
+
+    document.getElementById('urgent').style.backgroundColor = '#FF3D00';
+    document.getElementById('urgent').style.color = 'white';
+    document.getElementById('urgent-img').src = '/AddTask/imgAddTask/urgent.svg';
+    document.getElementById('medium').style.backgroundColor = 'white';
+    document.getElementById('medium').style.color = 'black';
+    document.getElementById('medium-img').src = '/AddTask/imgAddTask/medium.svg';
+    document.getElementById('low').style.backgroundColor = 'white';
+    document.getElementById('low').style.color = 'black';
+    document.getElementById('low-img').src = '/AddTask/imgAddTask/low.png';
+}
+
+/**
+ * Sets the selected priority to 'Medium' and updates the visual styling for the priority buttons.
+ */
+function priorityMedium() {
+    selectedPriority = 'Medium';
+
+    document.getElementById('urgent').style.backgroundColor = 'white';
+    document.getElementById('urgent').style.color = 'black';
+    document.getElementById('urgent-img').src = '/AddTask/imgAddTask/urgent.png';
+    document.getElementById('medium').style.backgroundColor = '#FFA800';
+    document.getElementById('medium').style.color = 'white';
+    document.getElementById('medium-img').src = '/AddTask/imgAddTask/medium.png';
+    document.getElementById('low').style.backgroundColor = 'white';
+    document.getElementById('low').style.color = 'black';
+    document.getElementById('low-img').src = '/AddTask/imgAddTask/low.png';
+}
+
+/**
+ * Sets the selected priority to 'Low' and updates the visual styling for the priority buttons.
+ */
+function priorityLow() {
+    selectedPriority = 'Low';
+
+    document.getElementById('low').style.backgroundColor = '#7BE129';
+    document.getElementById('low').style.color = 'white';
+    document.getElementById('low-img').src = '/AddTask/imgAddTask/low.svg';
+    document.getElementById('medium').style.backgroundColor = 'white';
+    document.getElementById('medium').style.color = 'black';
+    document.getElementById('medium-img').src = '/AddTask/imgAddTask/medium.svg';
+    document.getElementById('urgent').style.backgroundColor = 'white';
+    document.getElementById('urgent').style.color = 'black';
+    document.getElementById('urgent-img').src = '/AddTask/imgAddTask/urgent.png';
+}
+
+/**
+ * Shows the contacts on the add task page
+ */
+async function showContacts() {
+    document.getElementById('contacts').innerHTML = '';
+
+    for (let i = 0; i &lt; contactsAddTask.length; i++) {
+        let contact = contactsAddTask[i];
+        let initials = getContactInitials(contact.name);
+        document.getElementById('contacts').innerHTML += `
+        &lt;div class="contacts" id="contact-${i}">
+            &lt;div class="signContainer">
+                &lt;div class="sign" style="background-color: ${contact.backgroundColor}">${initials}&lt;/div>
+                &lt;div id="added-${i}">${contact.name}&lt;/div>
+            &lt;/div>
+            &lt;button type="button" onclick="addContactToTodo(${i})">&lt;img src="imgAddTask/add.svg">&lt;/button>
+        &lt;/div>
+        `;
+    }
+}
+
+/**
+ * Adds or removes a contact from the 'contactsObject' based on its existence and updates the UI accordingly.
+ * @param {string} i - The index of the contact in the 'contactsAddTask' array.
+ */
+function addContactToTodo(i) {
+    let contactElement = document.getElementById(`added-${i}`);
+    let contactToAdd = contactsAddTask[i];
+
+    let existingContactIndex = contactsObject.findIndex(existingContact => existingContact.id === contactToAdd.id);
+
+    if (existingContactIndex !== -1) {
+        contactsObject.splice(existingContactIndex, 1);
+        contactElement.innerHTML = contactToAdd.name;
+        displayFeedback('Contact removed successfully!');
+    } else {
+        contactsObject.push({
+            id: contactToAdd.id,
+            name: contactToAdd.name,
+            mail: contactToAdd.mail,
+            phone: contactToAdd.phone,
+            backgroundColor: contactToAdd.backgroundColor
+        });
+
+        contactElement.innerHTML += ' &lt;i>(added)&lt;/i>';
+        displayFeedback('Contact added successfully!');
+    }
+}
+
+/**
+ * Displays feedback message in the designated container and hides it after a specified duration.
+ *
+ * @param {string} message - The feedback message to be displayed.
+ */
+function displayFeedback(message) {
+    const feedbackContainer = document.getElementById('feedback');
+    feedbackContainer.innerHTML = message;
+    feedbackContainer.style.display = 'block';
+
+    setTimeout(() => {
+        feedbackContainer.innerHTML = '';
+        feedbackContainer.style.display = 'none';
+    }, 1500);
+}
+
+/**
+ * Adds a new subtask to the 'subtasks' array and updates the UI accordingly.
+ */
+function addSubtask() {
+    let subtaskInput = document.getElementById('subtasks');
+    let subtaskText = subtaskInput.value.trim();
+
+    if (subtaskText !== '') {
+        let subtaskIndex = subtasks.length;
+        document.getElementById('subtasks-list').innerHTML += `&lt;li>&lt;span>${subtaskText}&lt;/span>&lt;input type="text" id="editSubtaskInput${subtaskIndex}" style="display: none;">&lt;div>&lt;button onclick="editSubtask(${subtaskIndex})">&lt;img src="imgAddTask/edit.svg">&lt;/button>&lt;button onclick="deleteSubtask(${subtaskIndex})">&lt;img src="imgAddTask/delete.svg">&lt;/button>&lt;/div>&lt;/li>`;
+
+        let subtasksObject = {
+            text: subtaskText,
+            checked: false
+        };
+        subtasks.push(subtasksObject);
+
+        subtaskInput.value = '';
+    } else {
+        displayFeedback('Subtask cannot be empty!');
+    }
+}
+
+/**
+ * Edits a subtask's text in the 'subtasks' array and updates the UI accordingly.
+ *
+ * @param {number} index - The index of the subtask in the 'subtasks' array.
+ */
+function editSubtask(index) {
+    let subtaskElement = document.getElementById(`editSubtaskInput${index}`);
+    let subtaskSpan = document.querySelector(`#subtasks-list li:nth-child(${index + 1}) span`);
+
+    if (subtaskElement.style.display === 'none') {
+        subtaskElement.style.display = 'inline';
+        subtaskElement.value = subtasks[index].text;
+        subtaskSpan.style.display = 'none';
+        subtaskElement.focus();
+    } else {
+        subtasks[index].text = subtaskElement.value;
+        subtaskSpan.textContent = subtasks[index].text;
+        subtaskElement.style.display = 'none';
+        subtaskSpan.style.display = 'inline';
+    }
+}
+
+/**
+ * Deletes a subtask from the 'subtasks' array based on its index and updates the UI accordingly.
+ *
+ * @param {number} index - The index of the subtask in the 'subtasks' array to be deleted.
+ */
+function deleteSubtask(index) {
+    subtasks.splice(index, 1);
+    displaySubtasks();
+}
+
+/**
+ * Displays the list of subtasks in the UI based on the 'subtasks' array.
+ */
+function displaySubtasks() {
+    let subtasksList = document.getElementById('subtasks-list');
+    subtasksList.innerHTML = '';
+
+    subtasks.forEach((subtask, index) => {
+        subtasksList.innerHTML += `&lt;li>${subtask.text}&lt;div>&lt;button>&lt;img src="imgAddTask/edit.svg">&lt;/button>&lt;button onclick="deleteSubtask(${index})">&lt;img src="imgAddTask/delete.svg">&lt;/button>&lt;/div>&lt;/li>`;
+    });
+}
+
+/**
+ * Sets the minimum date for the 'selectedDate' input field to the current date.
+ */
+async function setMinDate() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("selectedDate").min = today;
+}
+
+/**
+ * Enables the 'create' button and navigates to the board.html page.
+ */
+function createTask() {
+    create.disabled = false;
+    window.location.href = '/Board/board.html';
+}
+
+/**
+ * Clears input fields and resets selections when creating a new task.
+ */
+async function clearInputs() {
+    document.getElementById('title').value = '';
+    document.getElementById('descritpion').value = '';
+    document.getElementById('selectedDate').value = '';
+
+    document.getElementById('category').selectedIndex = 0;
+
+    document.getElementById('subtasks').value = '';
+    document.getElementById('subtasks-list').innerHTML = '';
+
+    priorityMedium();
+
+    contactsAddTask = JSON.parse(await getItem('contacts')) || [];
+    contactsObject = [];
+
+    await showContacts();
+}
+
+
+
+async function getInitials() {
+    UserInitials = await getItem('userInitial');
+    UserName = await getItem('userName');
+    const kanban = document.getElementById("kanban");
+    kanban.innerHTML += `&lt;div onclick="displayOptions()">
+      ${UserInitials}
+      &lt;/div>`;
+}
+
+
+
+function displayOptions() {
+    const options = document.getElementById("options");
+    options.style.display = '';
+    const isDisplayed = options.classList.toggle("dNone");
+  
+    if (isDisplayed) {
+      document.getElementById('options').style.display = 'none';
+    }
+  
+    if (isDisplayed &amp;&amp; !options.innerHTML.trim()) {
+      options.innerHTML = /*html*/`
+        &lt;div class="option">&lt;a href="/PrivacyPolicy/privacypolicy.html">Privacy Policy&lt;/a>&lt;/div>
+        &lt;div class="option">&lt;a href="/LegalNotice/legalnotice.html">Legal Notice&lt;/a>&lt;/div>
+        &lt;div class="option" onclick="goToLogin()">Log out&lt;/div>
+      `;
+    }
+   
+  }
+  
+
+function goToLogin() {
+    window.location.pathname = '/Login/login.html';
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#LoginRegistered">LoginRegistered</a></li><li><a href="global.html#addContact">addContact</a></li><li><a href="global.html#addContactToTodo">addContactToTodo</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#addTask">addTask</a></li><li><a href="global.html#addTodo">addTodo</a></li><li><a href="global.html#allowDrop">allowDrop</a></li><li><a href="global.html#categoryDown">categoryDown</a></li><li><a href="global.html#categoryUp">categoryUp</a></li><li><a href="global.html#checkPasswords">checkPasswords</a></li><li><a href="global.html#clearInputs">clearInputs</a></li><li><a href="global.html#closeCard">closeCard</a></li><li><a href="global.html#closeContactInformation">closeContactInformation</a></li><li><a href="global.html#createCheckboxes">createCheckboxes</a></li><li><a href="global.html#createContact">createContact</a></li><li><a href="global.html#createTask">createTask</a></li><li><a href="global.html#deleteContactByName">deleteContactByName</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteTodo">deleteTodo</a></li><li><a href="global.html#displayFeedback">displayFeedback</a></li><li><a href="global.html#displayOptions">displayOptions</a></li><li><a href="global.html#displaySubtasks">displaySubtasks</a></li><li><a href="global.html#editContact">editContact</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editTodo">editTodo</a></li><li><a href="global.html#enableTheBtn">enableTheBtn</a></li><li><a href="global.html#filterTodos">filterTodos</a></li><li><a href="global.html#generateBackroundColor">generateBackroundColor</a></li><li><a href="global.html#generateBigCard">generateBigCard</a></li><li><a href="global.html#generateContacts">generateContacts</a></li><li><a href="global.html#generateKanbanHTML">generateKanbanHTML</a></li><li><a href="global.html#getCompletedSubtaskCount">getCompletedSubtaskCount</a></li><li><a href="global.html#getContactInitials">getContactInitials</a></li><li><a href="global.html#getContacts">getContacts</a></li><li><a href="global.html#getContactsBig">getContactsBig</a></li><li><a href="global.html#getContactsPic">getContactsPic</a></li><li><a href="global.html#getCurrentDate">getCurrentDate</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getItem">getItem</a></li><li><a href="global.html#getPriorityImage">getPriorityImage</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#getSubtaskCount">getSubtaskCount</a></li><li><a href="global.html#getTimeOfDay">getTimeOfDay</a></li><li><a href="global.html#greetingOnDailyTime">greetingOnDailyTime</a></li><li><a href="global.html#highlight">highlight</a></li><li><a href="global.html#includeHTML">includeHTML</a></li><li><a href="global.html#loadContacts">loadContacts</a></li><li><a href="global.html#loadTodos">loadTodos</a></li><li><a href="global.html#loadUsers">loadUsers</a></li><li><a href="global.html#loadtodoSums">loadtodoSums</a></li><li><a href="global.html#loginAsGuest">loginAsGuest</a></li><li><a href="global.html#moveCategoryDown">moveCategoryDown</a></li><li><a href="global.html#moveCategoryUp">moveCategoryUp</a></li><li><a href="global.html#moveTo">moveTo</a></li><li><a href="global.html#openCard">openCard</a></li><li><a href="global.html#openContact">openContact</a></li><li><a href="global.html#priorityLow">priorityLow</a></li><li><a href="global.html#priorityMedium">priorityMedium</a></li><li><a href="global.html#priorityUrgent">priorityUrgent</a></li><li><a href="global.html#registerUser">registerUser</a></li><li><a href="global.html#removeHighlight">removeHighlight</a></li><li><a href="global.html#saveTodo">saveTodo</a></li><li><a href="global.html#selectedPriority">selectedPriority</a></li><li><a href="global.html#setMinDate">setMinDate</a></li><li><a href="global.html#showContacts">showContacts</a></li><li><a href="global.html#startDraggin">startDraggin</a></li><li><a href="global.html#succesfullySignedUp">succesfullySignedUp</a></li><li><a href="global.html#updateAwaitFeedback">updateAwaitFeedback</a></li><li><a href="global.html#updateContact">updateContact</a></li><li><a href="global.html#updateDB">updateDB</a></li><li><a href="global.html#updateDone">updateDone</a></li><li><a href="global.html#updateHTML">updateHTML</a></li><li><a href="global.html#updateInProgress">updateInProgress</a></li><li><a href="global.html#updateStatusBasedOnCurrent">updateStatusBasedOnCurrent</a></li><li><a href="global.html#updateStatusBasedOnPrevious">updateStatusBasedOnPrevious</a></li><li><a href="global.html#updateSubtaskStatus">updateSubtaskStatus</a></li><li><a href="global.html#updateToDo">updateToDo</a></li><li><a href="global.html#validateNumbers">validateNumbers</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Mar 05 2024 13:41:36 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

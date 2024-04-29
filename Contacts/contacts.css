@@ -1,0 +1,714 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    max-width: 1440px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin: 0;
+}
+
+.content {
+    display: flex;
+}
+
+.allContacts {
+    width: 456px;
+    height: 928px;
+    margin-top: 96px;
+    margin-left: 232px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+#addContact {
+    width: 357px;
+    height: 56px;
+    border-radius: 10px;
+    border: 0px;
+    padding: 16px 10px 16px 10px;
+    background-color: #4589FF;
+    color: white;
+    font-size: 23px;
+    margin: 32px 24px 16px 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#addContact:hover {
+    cursor: pointer;
+    background-color: #005bf8;
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
+}
+
+#addContact img {
+    margin-left: 8px;
+}
+
+.alphabet {
+    height: 56px;
+    width: 352px;
+    padding: 17px 36px 17px 36px;
+    gap: 8px;
+    font-size: 18px;
+
+}
+
+.borderBottom {
+    padding: 8px 0px 8px 0px;
+    width: 352px;
+    height: 16px;
+    gap: 10px;
+    border-bottom: 1px solid lightgray;
+    margin-left: 24px;
+}
+
+.contact {
+    height: 77px;
+    width: 352px;
+    border-radius: 10px;
+    padding: 15px 24px 15px 24px;
+    gap: 35px;
+    display: flex;
+    align-items: center;
+    font-size: 19px;
+}
+
+.contact:hover {
+    cursor: pointer;
+    background-color: #D2E3FF;
+}
+
+.contactSign {
+    background-color: #F77A02;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 12px;
+    border: white 2px solid;
+}
+
+.contactContent {
+    top: 168px;
+    gap: 21px;
+    width: 1440px;
+    position: fixed;
+    left: 750px;
+}
+
+.contactId {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.bigContactSign {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+    width: 120px;
+    font-size: 47px;
+    color: white;
+    border: white 2px solid;
+    border-radius: 50%;
+    background-color: #F77A02;
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
+}
+
+.contactName {
+    font-size: 47px;
+    font-weight: 500;
+    margin-left: 21px;
+    display: flex;
+    flex-direction: column;
+}
+
+.contactName span {
+    display: flex;
+}
+
+.contactName button {
+    background-color: white;
+    border: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.contactName button:hover {
+    color: #005bf8;
+    scale: 1.05;
+    cursor: pointer;
+}
+
+.contactId {
+    display: flex;
+    flex-direction: row;
+}
+
+.contactInfo h3 {
+    font-size: 23px;
+    font-weight: 700;
+}
+
+a {
+    color: #4589FF;
+    text-decoration: none;
+}
+
+#addNewContact {
+    height: 100vh;
+    width: 584px;
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    border-top-left-radius: 30px;
+    background-color: white;
+    border-bottom-left-radius: 30px;
+    position: fixed;
+    top: 95px;
+    left: 856px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.addContactHeader {
+    height: 362.48px;
+    width: 584px;
+    background-color: #005bf8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-top-left-radius: 30px;
+}
+
+.closeButton {
+    background-color: rgba(255, 255, 255, 0);
+    border: 0;
+    height: 32px;
+    width: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 481px;
+    margin-bottom: 25px;
+}
+
+.closeButton:hover {
+    cursor: pointer;
+    background-color: #4589FF;
+    border-radius: 50%;
+}
+
+.addContactInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 32px;
+    border-bottom-left-radius: 30px;
+}
+
+.addContactInfo input {
+    width: 422px;
+    height: 48px;
+    margin-top: 8px;
+    border: 0;
+    border-bottom: 1px solid lightgray;
+}
+
+.inputDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inputDiv img {
+    margin-top: 12px;
+    margin-left: -24px;
+}
+
+h1 {
+    color: white;
+    font-size: 48px;
+    font-weight: 700;
+    margin-block-end: 0;
+}
+
+.addContactHeader h2 {
+    color: white;
+    font-size: 27px;
+    font-weight: 400;
+}
+
+.addContactButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 32px;
+    gap: 32px;
+}
+
+#cancel {
+    height: 61px;
+    width: 136px;
+    background-color: white;
+    border: 1px solid #647188;
+    border-radius: 10px;
+    padding: 16px 10px 16px 10px;
+    color: #647188;
+    font-size: 23px;
+    font-weight: 400;
+}
+
+#cancel:hover {
+    cursor: pointer;
+    border: 1px solid #4589FF;
+    color: #4589FF;
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
+    scale: 1.01;
+    transition: 200ms;
+}
+
+#create {
+    height: 60px;
+    width: 204px;
+    border-radius: 10px;
+    padding: 16px 10px 16px 10px;
+    border: 0;
+    background-color: #4589FF;
+    color: white;
+    font-size: 23px;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+}
+
+#create:hover {
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
+    background-color: #005bf8;
+    cursor: pointer;
+    scale: 1.01;
+    transition: 200ms;
+}
+
+#editContact {
+    height: 100vh;
+    width: 584px;
+    left: 0;
+    position: absolute;
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
+    top: 95px;
+    display: flex;
+    flex-direction: column;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    background-color: white;
+    position: fixed;
+    top: 95px;
+    left: 0;
+}
+
+.editContactHeader {
+    height: 362.48px;
+    width: 584px;
+    background-color: #005bf8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-top-right-radius: 30px;
+}
+
+#deleteButton {
+    height: 61px;
+    width: 136px;
+    background-color: white;
+    border: 1px solid #647188;
+    border-radius: 10px;
+    padding: 16px 10px 16px 10px;
+    color: #647188;
+    font-size: 23px;
+    font-weight: 400;
+}
+
+#deleteButton:hover {
+    cursor: pointer;
+    border: 1px solid #4589FF;
+    color: #4589FF;
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
+    scale: 1.01;
+    transition: 200ms;
+}
+
+#saveButton {
+    height: 60px;
+    width: 204px;
+    border-radius: 10px;
+    padding: 16px 10px 16px 10px;
+    border: 0;
+    background-color: #4589FF;
+    color: white;
+    font-size: 23px;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+}
+
+#saveButton:hover {
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
+    background-color: #005bf8;
+    cursor: pointer;
+    scale: 1.01;
+    transition: 200ms;
+}
+
+#bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.618);
+}
+
+.highlighted-contact {
+    background-color: #4689FF;
+    color: white;
+}
+
+.displayNone {
+    display: none !important;
+}
+
+.close-btn-cont {
+    display: none;
+}
+
+.close-btn-cont img {
+    display: flex;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 150px;
+    margin-left: 16px;
+    background: #4689FF;
+}
+
+.close-btn-cont img:hover {
+    cursor: pointer;
+    background-color: #6a9aee;
+}
+
+.zIndexOne {
+    z-index: 1;
+}
+
+.zIndexZero {
+    z-index: 0;
+}
+
+/*/// Media-querry///*/
+
+@media (max-width: 1440px) {
+    #addNewContact {
+        left: auto;
+        right: 0;
+    }
+}
+
+@media (max-width: 1300px) {
+    .contactContent {
+        left: auto;
+        right: 5% !important;
+        width: auto;
+        background-color: white;
+        height: 90vh;
+        padding-left: 20px;
+    }
+}
+
+@media (max-width: 700px) {
+    .body {
+        overflow-x: auto;
+    }
+
+    .allContacts {
+        margin-left: 16px;
+    }
+
+    .contactId {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .close-btn-cont {
+        display: block;
+    }
+
+    .close-btn-cont img {
+        right: 5%;
+    }
+
+    .contactContent {
+        left: 8px;
+        width: fit-content;
+        background-color: white;
+    }
+
+    #contactContent {
+        width: 100vh;
+    }
+
+    .bigContactSign {
+        height: 100px;
+        width: 100px;
+    }
+
+    #editContact {
+        height: 700px;
+        width: 420px;
+        border-radius: 30px;
+        top: 100px;
+        left: 50%;
+        transform: translate(-50%);
+    }
+
+    #editContact input {
+        width: 364px;
+    }
+
+    .editContactHeader {
+        height: 328px;
+        width: 420px;
+        border-top-left-radius: 30px;
+    }
+
+    #saveButton {
+        height: 48px;
+        width: 86px;
+        font-size: 19px;
+    }
+
+    #deleteButton {
+        height: 48px;
+        width: 104px;
+        font-size: 19px;
+    }
+
+    .addContactButtons {
+        margin-bottom: 16px;
+    }
+
+    #addNewContact {
+        height: 745px;
+        width: 420px;
+        border-radius: 30px;
+        top: 100px;
+        left: 50%;
+        transform: translate(-50%);
+    }
+
+    #addNewContact input {
+        width: 364px;
+    }
+
+    .addContactHeader {
+        height: 328px;
+        width: 420px;
+        border-top-right-radius: 30px;
+    }
+
+    .addEditLogo {
+        display: none;
+    }
+
+    .closeButton {
+        margin-left: 309px;
+        margin-top: 20px;
+    }
+
+    .contactName {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 430px) {
+    #addContact {
+        max-width: 90%;
+    }
+
+    .contactContent {
+        left: 8px;
+        width: fit-content;
+        background-color: white;
+    }
+
+    #editContainer {
+        position: absolute;
+        left: 11%;
+        right: 11%;
+        top: 1%;
+    }
+
+    .closeButton {
+        margin-left: 214px;
+        margin-top: 1px;
+        height: 38px !important;
+        width: 38px !important;
+    }
+
+    #allContacts {
+        width: 100%;
+    }
+
+    #editContact {
+        height: 700px;
+        width: 300px;
+        border-radius: 30px;
+        top: 100px;
+    }
+
+    #editContact input {
+        width: 280px;
+    }
+
+    .editContactHeader {
+        height: 328px;
+        width: 300px;
+        border-top-left-radius: 30px;
+    }
+
+    #addNewContact {
+        height: 700px;
+        width: 300px;
+        border-radius: 30px;
+        top: 100px;
+    }
+
+    #addNewContact input {
+        width: 280px;
+    }
+
+    .addContactHeader {
+        height: 328px;
+        width: 300px;
+        border-top-right-radius: 30px;
+    }
+
+    .addContactHeader h2 {
+        font-size: 19px;
+    }
+
+    h1 {
+        font-size: 41px;
+    }
+
+    #addNewContact button {
+        height: 48px;
+        width: 104px;
+        font-size: 19px;
+    }
+
+}
+
+@media (max-width: 376px) {
+    .contactName {
+        font-size: 30px;
+        margin-left: 0;
+    }
+
+    .contactContent {
+        top: 0px;
+    }
+
+
+    #editContact {
+        top: 50px;
+        height: 530px !important;
+    }
+
+    #addNewContact {
+        top: 80px;
+        height: 490px;
+    }
+
+    #addNewContact button{
+        font-size: 15px;
+    }
+
+    .addContactHeader {
+        height: 150px;
+    }
+
+    .addContactInfo {
+        margin-top: 4px;
+    }
+
+    .addContactInfo input {
+        height: 35px;
+    }
+
+    h1 {
+        font-size: 30px;
+        margin: 0;
+    }
+
+    .addContactHeader h2 {
+        font-size: 17px;
+    }
+
+    .closeButton {
+        margin-top: 13px;
+        margin-left: 238px;
+    }
+
+    .allContacts {
+        overflow-y: auto;
+    }
+
+    #options {
+        left: 190px;
+    }
+
+    .bigContactSign {
+        height: 70px;
+        width: 70px;
+        font-size: 33px;
+    }
+
+    .close-btn-cont img {
+        height: 21px;
+        width: 21px;
+    }
+
+    .contact {
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+        margin-left: -50px;
+    }
+
+    .allContacts {
+        margin-top: 0;
+    }
+
+    .addContactButtons{
+        margin-top: 7px;
+    }
+}

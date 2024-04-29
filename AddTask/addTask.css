@@ -1,0 +1,654 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    max-width: 1440px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin: 0;
+}
+
+span {
+    height: 23px;
+    font-size: 19px;
+    ;
+    color: #42526E;
+}
+
+textarea {
+    resize: none;
+}
+
+form {
+    overflow-y: auto;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 488px;
+    height: 928px;
+    padding: 0px 24px 0px 24px;
+    gap: 24px;
+    overflow-y: hidden;
+    margin-top: 50px;
+    margin-left: 232px;
+}
+
+.title {
+    height: 84px;
+    width: 440px;
+}
+
+#title {
+    font-size: 32px;
+    border: 0;
+    border-bottom: 1px solid #D1D1D1;
+    gap: 10px;
+    width: 440px;
+}
+
+.descritpion {
+    display: flex;
+    flex-direction: column;
+    width: 440px;
+    height: 154px;
+    gap: 8px;
+    font-size: 19px;
+}
+
+#descritpion {
+    height: 119px;
+    width: 440px;
+    border: 1px solid #D1D1D1;
+    border-radius: 0px 10px 10px 10px;
+    font-family: 'Open Sans', sans-serif;
+    gap: 4px;
+    margin-bottom: 16px;
+    margin-top: 4px;
+}
+
+.date {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    height: 99px;
+    width: 440px;
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 16px;
+}
+
+.custom-date-input {
+    position: relative;
+}
+
+#selectedDate {
+    width: 440px;
+    height: 48px;
+    font-family: 'Open Sans', sans-serif;
+    border: 0;
+    border-bottom: 1px solid #D1D1D1;
+}
+
+#selectedDate::-webkit-calendar-picker-indicator {
+    background-image: url(imgAddTask/event.svg);
+    height: 20px;
+    width: 20px;
+}
+
+.calendar-icon {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
+
+.calendar-icon:hover {
+    cursor: pointer;
+}
+
+.priority {
+    height: 82px;
+    width: 440px;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-left: 2px;
+}
+
+.priority button {
+    border-radius: 10px;
+    border: 0px;
+    background-color: white;
+    padding: 18px 10px 18px 10px;
+    height: 51px;
+    width: 136px;
+    box-shadow: 0px 0px 4px 0px black;
+    margin-top: 4px;
+}
+
+.priority button img {
+    width: 20px;
+    height: 14.51px;
+    padding-left: 10px;
+}
+
+.priority-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.priority button:hover {
+    cursor: pointer;
+}
+
+#urgent:hover {
+    border-bottom: 3px solid #ff3d00;
+}
+
+#medium {
+    background-color: #FFA800;
+    color: white;
+}
+
+#medium img {
+    height: 7.45px;
+}
+
+#medium:hover {
+    border-bottom: 3px solid #FFA800;
+}
+
+#low:hover {
+    border-bottom: 3px solid #7ae228;
+}
+
+.contacts {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 4px;
+    justify-content: space-between;
+}
+
+.contacts button {
+    background-color: rgba(255, 255, 255, 0);
+    border: 0;
+}
+
+.contacts button:hover {
+    cursor: pointer;
+}
+
+.contacts:hover {
+    background-color: #D2E3FF;
+    border-radius: 8px;
+}
+
+
+.sign {
+    background-color: #F77A02;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 12px;
+    border: white 2px solid;
+}
+
+.signContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#contacts {
+    display: flex;
+    flex-direction: column;
+    overflow-x: auto;
+    height: 100px;
+}
+
+.feedback-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    padding: 20px;
+    z-index: 999;
+    font-size: 23px;
+    font-weight: 700;
+    color: #42526E;
+    border: 1px solid #42526E;
+}
+
+.select {
+    height: 130px;
+    width: 440px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+
+select {
+    height: 48px;
+    width: 440px;
+    padding: 12px 16px 12px 16px;
+    border: 0;
+    border-bottom: 1px solid #D1D1D1;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: white url('imgAddTask/arrow_drop_down.svg') no-repeat right center;
+    background-size: 8px;
+}
+
+select:hover {
+    cursor: pointer;
+    border-bottom: 1px solid #4589FF;
+}
+
+.subtasks {
+    display: flex;
+    flex-direction: column;
+    width: 440px;
+    height: 79px;
+}
+
+.subtask-input-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 200px;
+}
+
+.subtask-input-container img:hover {
+    cursor: pointer;
+}
+
+.subtask-input-container svg {
+    margin-left: -20px;
+}
+
+.subtask-input-container svg:hover {
+    cursor: pointer;
+}
+
+.subtasks input {
+    width: 420px;
+    height: 48px;
+    border: 0;
+    border-bottom: 1px solid #D1D1D1;
+    padding: 12px 16px 12px 16px;
+    outline: none;
+}
+
+.subtasks input:hover {
+    border-bottom: 1px solid #4589FF;
+}
+
+.subtask-input-field {
+    display: flex;
+}
+
+.buttons {
+    max-width: 1440px;
+    height: 61px;
+    gap: 4px;
+    display: flex;
+    justify-content: end;
+    top: -55px;
+    margin-right: 25px;
+}
+
+#clear {
+    width: 136px;
+    height: 61px;
+    border-radius: 10px;
+    border: 1px solid #647188;
+    padding: 10px 16px 10px 16px;
+    margin-right: 7px;
+    background-color: white;
+    color: #647188;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+#clear:hover {
+    cursor: pointer;
+    border: 1px solid #4589FF;
+    color: #4589FF;
+    transition: 100ms;
+    box-shadow: 0px 0px 2px 0px #4589FF;
+    stroke: #4589FF;
+}
+
+#clear:hover svg path {
+    stroke: #4589FF;
+}
+
+#clear img {
+    height: 11.23px;
+    width: 15.49px;
+    top: 24.38px;
+    left: 144.26px;
+}
+
+#create {
+    width: 174px;
+    height: 61px;
+    padding: 10px 16px 10px 16px;
+    border-radius: 10px;
+    border: 0px;
+    background-color: #4589FF;
+    color: white;
+    margin-left: 7px;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+#create:hover {
+    background-color: #005bf8;
+    transition: 100ms;
+    cursor: pointer;
+    box-shadow: 0px 0px 2px 0px #005bf8;
+}
+
+#create img {
+    height: 11.23px;
+    width: 15.49px;
+    top: 24.38px;
+    left: 144.26px;
+}
+
+.list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.list li img {
+    padding: 5px;
+}
+
+.list button {
+    background-color: white;
+    border: none;
+}
+
+.list button:hover {
+    cursor: pointer;
+}
+
+.listSubtasks {
+    height: fit-content;
+    overflow-y: auto;
+}
+
+/*////Mediaquerry////*/
+
+@media (max-width: 700px) {
+    .feedback-container {
+        background-color: rgb(255, 255, 255);
+    }
+
+    .buttons {
+        height: 50px;
+        margin-top: 16px;
+        margin-bottom: 70px;
+        top: 790px;
+        position: fixed;
+        margin-left: 150px;
+    }
+
+    #clear {
+        display: none;
+    }
+
+    #create {
+        height: 48px;
+        width: 160px;
+    }
+
+    form {
+        position: fixed;
+        left: 50%;
+        transform: translate(-50%);
+        margin: 0;
+    }
+
+    .title {
+        height: 60px;
+        width: 396px;
+    }
+
+    #title {
+        font-size: 28px;
+        padding: 7px 16px 7px 16px;
+        max-width: 356px;
+    }
+
+    .description {
+        height: 135px;
+        width: 396px;
+        margin-bottom: 4px;
+    }
+
+    .description span {
+        font-size: 16px;
+        height: 19px;
+    }
+
+    #descritpion {
+        padding: 18px 16px 18px 16px;
+        font-size: 16px;
+        font-weight: 400;
+        width: 352px;
+        height: 65px;
+    }
+
+    .date {
+        height: 95px;
+        width: 396px;
+        gap: 0px;
+        margin-bottom: 0px;
+    }
+
+    .date span {
+        font-size: 16px;
+        height: 19px;
+    }
+
+    #selectedDate {
+        width: 380px;
+    }
+
+    .priority {
+        width: 380px;
+        height: 48px;
+        margin-bottom: 45px;
+        padding-left: 3px;
+    }
+
+    .priority span {
+        font-size: 16px;
+    }
+
+    .priority-buttons {
+        width: 378px;
+    }
+
+    .priority-buttons button {
+        width: 121px;
+        height: 48px;
+    }
+
+    select {
+        height: 75px;
+        width: 380px;
+    }
+
+    .select {
+        width: 380px;
+        height: 75px;
+    }
+
+
+    .subtasks {
+        width: 380px;
+        height: 75px;
+    }
+
+    .subtask-input-field {
+        width: 377px;
+    }
+
+    .subtasks input {
+        width: 385px;
+        height: 35px;
+    }
+
+    .subtasks ul {
+        position: fixed;
+        left: -10px;
+        height: 56px;
+        width: 60px;
+    }
+
+}
+
+@media (max-width: 520px) {
+    form {
+        width: 430px;
+    }
+}
+
+@media (max-width: 430px) {
+
+    #low,
+    #urgent,
+    #medium {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 80px;
+        font-size: 13px;
+    }
+
+    .priority-buttons button img {
+        padding-left: 4px;
+    }
+
+    .priority-buttons {
+        width: 300px;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .select {
+        width: 300px;
+    }
+
+    .subtasks {
+        width: 300px;
+    }
+
+    .date {
+        width: 300px;
+    }
+
+    .priority {
+        width: 300px;
+    }
+
+    .title {
+        width: 300px;
+    }
+
+    .description {
+        width: 300px;
+    }
+
+    span {
+        width: 200px;
+    }
+
+    .subtask-input-container {
+        width: 300px;
+    }
+
+    form {
+        width: 324px;
+    }
+
+    .subtask-input-field,
+    select,
+    .contacts,
+    #selectedDate {
+        width: 290px;
+    }
+
+    #descritpion,
+    #title {
+        width: 270px;
+    }
+
+    #contacts {
+        width: 300px;
+        overflow-x: hidden;
+    }
+
+    .contacts {
+        width: 280px;
+    }
+
+    .buttons {
+        top: 810px;
+        margin-left: 25%;
+    }
+
+    #create {
+        margin-left: 36px;
+        font-size: 16px;
+    }
+
+    #create img {
+        height: 16px;
+        width: 16px;
+    }
+
+    .list li {
+        width: 200px;
+    }
+}
+
+@media (max-width: 376px) {
+    .content {
+        position: fixed;
+        left: 50%;
+        transform: translate(-50%);
+        margin-left: 8px;
+        overflow-y: scroll;
+        height: 110%;
+    }
+
+    form {
+        height: 150%;
+    }
+
+    .buttons {
+       top: 77vh;
+       right: -5%;
+    }
+
+    #create {
+        font-size: 0;
+        width: 40px;
+        display: flex;
+        padding: 0;
+        align-items: center;
+        justify-content: center;
+    }
+}

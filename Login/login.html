@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<link rel="stylesheet" href="login.css">
+<link rel="stylesheet" href="fonts.css">
+<link rel="icon" type="image/svg" href="/imgs/favicon_join.svg">
+<script src="login.js"></script>
+<script src="/storage.js"></script>
+<script src="/registerUser.js"></script>
+
+<body>
+
+    <div class="join-logo-container">
+        <img class="join-logo-img animation-join-logo invis-visible-animation" src="./imgs/firstpage_logo_join.png">
+    </div>
+
+    <div>
+        <div>
+            <img class="Join-logo-left-corner-above" src="imgs/login_logo_left_corner.png">
+        </div>
+        <div class="above-signup-right-corner">
+            <div class="flex-container">
+                <div class="above-signup-right-corner-txt">Not a Join user?</div>
+                <button onclick="redirectToSignUp()" class="btn-above-login-section">Sign Up</button>
+            </div>
+        </div>
+    </div>
+
+    <form onsubmit="LoginRegistered(); return false;" class="login-box-center">
+
+        <div class="login-txt-container">
+            <div class="login-txt-in-login-box">Log in</div>
+            <div class="underline-blue"></div>
+        </div>
+
+        <div class="email-input-container">
+            <input id="login_email_input" class="email-input" placeholder="Email" required type="email">
+        </div>
+        <div class="password-input-container">
+            <input id="login_password_input" class="password-input" placeholder="Password" required type="password">
+        </div>
+
+        <div class="checkbox-rememberme">
+            <input class="checkbox" type="checkbox" id="remember_me">
+            <label for="remember_me">Remember me</label>
+        </div>
+    
+        <div class="log-in-btns-container-bottom">
+            <button class="login-btn-bottom">Log In</button>
+            <button type="button" class="sign-up-btn-bottom" onclick="loginAsGuest()">Guest Log In</button>
+        </div>
+    </form>
+
+    <div class="privacy-policy-and-legal-notice-container">
+        <a href="/PrivacyPolicyBeforeLogin/PrivacyPolicy.html" target="_blank">Privacy Policy</a>
+        <a href="/LegalNoticeBeforeLogin/LegalNotice.html" target="_blank">Legal Notice</a>
+    </div>
+</body>
+</html>
+

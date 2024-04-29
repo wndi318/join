@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Contacts/contacts.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Contacts/contacts.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>let contacts = [];
+let colors = ["#9327FF", "#FF7900", "#6E52FF", "#FC71FF", "#FFBB2C", "#1CD7C1", "#462F8A", "#FF4647"];
+
+async function initBoard() {
+  await getInitials();
+  displayOptions();
+}
+
+/**
+ * This funciton creates contacts and pushes different contact informations from the Input fields to the Contact Array.
+ */
+async function createContact() {
+  contacts_length = JSON.parse(await getItem('contacts')) || [];
+  let newcontactsId = contacts_length.length - 1;
+  newcontactsId++;
+
+
+  contacts = JSON.parse(await getItem('contacts')) || [];
+  contacts.push({
+    id: newcontactsId,
+    name: nameInput.value,
+    mail: mail.value,
+    phone: phone.value,
+    backgroundColor: getRandomColor()
+  });
+
+  nameInput.value = '';
+  mail.value = '';
+  phone.value = '';
+
+  await setItem('contacts', JSON.stringify(contacts));
+  closeCard();
+  generateContacts();
+  closeContactInformation();
+}
+
+/**
+ * This funciton loads all contacts from the array and opens the generateContacts function.
+ */
+async function loadContacts() {
+  try {
+    contacts = JSON.parse(await getItem('contacts')) || [];
+    generateContacts();
+  } catch (e) {
+    console.error('Loading error:', e);
+
+  }
+}
+
+/**
+ * This function Shows the addContact PopUp
+ */
+function addContact() {
+  document.getElementById('contactContentContainer').classList.remove('displayNone');
+  document.getElementById('addNewContact').classList.remove('displayNone');
+  document.getElementById('bg').style.display = 'flex';
+}
+
+/**
+ * This function ensures that only numbers can be entered in the input field.
+ * @param {*} input - This is the input field which only shows numbers.
+ */
+function validateNumbers(input) {
+  const inputValue = input.value;
+  const numericValue = inputValue.replace(/\D/g, '');
+  input.value = numericValue;
+  2
+}
+
+/**
+ * This function generates a random color from a predefined array of colors.
+ *
+ * @returns {string} A randomly selected color.
+ */
+function getRandomColor() {
+  const randomIndex = Math.floor(Math.random() * colors.length);
+  return colors[randomIndex];
+}
+
+/**
+ * This funcion generates and displays a list of contacts in the 'allContacts' element.
+ * Contacts are sorted alphabetically by name, and a letter header is displayed for each unique initial.
+ */
+async function generateContacts() {
+
+  document.getElementById('allContacts').innerHTML = '';
+
+  contacts.sort((a, b) => a.name.localeCompare(b.name));
+
+  let processedInitials = [];
+
+  for (let i = 0; i &lt; contacts.length; i++) {
+    const contact = contacts[i];
+    const initials = getContactInitials(contact.name);
+
+    if (!processedInitials.includes(initials[0])) {
+      document.getElementById('allContacts').innerHTML += `
+        &lt;div>
+          &lt;span class="alphabet">${initials[0]}&lt;div class="borderBottom">&lt;/div>&lt;/span>
+        &lt;/div>
+      `;
+      processedInitials.push(initials[0]);
+    }
+    document.getElementById('allContacts').innerHTML += `
+      &lt;div id="${contact.id}" class="contact" onclick="openContact(${i}, '${contact.backgroundColor}')">
+        &lt;div class="contactSign" style="background-color: ${contact.backgroundColor}; color: white;">${initials}&lt;/div>&lt;span>${contact.name}&lt;/span>
+      &lt;/div>
+    `;
+  }
+}
+
+/**
+ * This function opens and displays detailed information about a specific contact.
+ *
+ * @param {number} i - The index of the contact in the 'contacts' array.
+ */
+async function openContact(i) {
+  const contact = contacts[i];
+  const initials = getContactInitials(contact.name);
+
+  highlightContactByName(contact.name);
+  document.getElementById('contactContent').classList.remove('displayNone');
+  document.getElementById('contactContent').innerHTML = `
+  &lt;div class="contactId">
+  
+  &lt;div class="bigContactSign" style="background-color: ${contact.backgroundColor}; color: white;">${initials}&lt;/div>
+  &lt;div class="contactName">
+      &lt;span>${contact.name}&lt;div id="close_contact_information" onclick="closeContactInformation()" class="close-btn-cont">
+      &lt;img src="img/close.svg">
+    &lt;/div>&lt;/span>
+      
+      &lt;span>
+          &lt;button onclick="editContact(${i})">&lt;img src="img/edit.svg">Edit&lt;/button>
+          &lt;button onclick="deleteContactByName('${contact.name}')">&lt;img src="img/delete.svg">Delete&lt;/button>
+      &lt;/span>
+  &lt;/div>
+&lt;/div>
+&lt;div class="contactInfo">
+  &lt;h3>Contact Information&lt;/h3>
+  &lt;span>&lt;b>Email&lt;/b>&lt;br>&lt;br>&lt;a href="mailto:${contact.mail}">${contact.mail}&lt;/a>&lt;/span>
+  &lt;br>
+  &lt;br>
+  &lt;span>&lt;b>Phone&lt;/b>&lt;br>&lt;br>${contact.phone}&lt;/span>
+&lt;/div>
+  `;
+}
+
+/**
+ * This function closes the contact Information
+ */
+function closeContactInformation() {
+  document.getElementById('contactContent').classList.add('displayNone');
+}
+
+function highlightContactByName(contactName) {
+  const normalizedContactName = contactName.trim().toLowerCase();
+
+  const contactsElements = document.querySelectorAll('.contact');
+
+  contactsElements.forEach(contactElement => {
+    contactElement.classList.remove('highlighted-contact');
+  });
+
+  const selectedContactElement = Array.from(contactsElements).find(contactElement => {
+    const contact = contacts.find(c => c.id == contactElement.id);
+    const normalizedComparisonName = contact ? contact.name.trim().toLowerCase() : '';
+    return normalizedComparisonName === normalizedContactName;
+  });
+
+  if (selectedContactElement) {
+    selectedContactElement.classList.add('highlighted-contact');
+  }
+}
+
+/**
+ * This function generates initials from the given full name.
+ *
+ * @param {string} name - The full name of the contact.
+ * @returns {string} The initials extracted from the name.
+ */
+function getContactInitials(name) {
+  const nameParts = name.split(' ');
+  const firstNameInitial = nameParts[0][0];
+  const lastNameInitial = nameParts.length > 1 ? nameParts[nameParts.length - 1][0] : '';
+  return firstNameInitial + lastNameInitial;
+}
+
+/**
+ * This function close the add contact or edit contact pop up
+ */
+function closeCard() {
+  document.getElementById('addNewContact').classList.add('displayNone');
+  document.getElementById('editContainer').classList.add('displayNone');
+  document.getElementById('bg').style.display = 'none';
+}
+
+/**
+ * Opens the edit contact interface for a specific contact.
+ *
+ * @param {number} i - The index of the contact in the 'contacts' array.
+ */
+
+function editContact(i) {
+  const contact = contacts[i];
+  document.getElementById('bg').style.display = 'flex';
+  document.getElementById('editContainer').classList.remove('displayNone');
+  document.getElementById('editContainer').innerHTML = '';
+
+  document.getElementById('editContainer').innerHTML += `
+    &lt;div id="editContact">
+      &lt;div class="editContactHeader">
+        &lt;button class="closeButton" onclick="closeCard()">&lt;img src="img/close.svg">&lt;/button>
+        &lt;img class="addEditLogo" src="img/logo.svg">
+        &lt;h1>Edit Contact&lt;/h1>
+      &lt;/div>
+      &lt;div class="addContactInfo">
+      &lt;img src="img/icon.svg">
+      &lt;form onsubmit="updateContact(${contact.id}); return false;">
+          &lt;div class="inputDiv">
+              &lt;input id="editName" required type="text" placeholder="Name" value="${contact.name}">
+              &lt;img src="img/person.svg">
+          &lt;/div>
+          &lt;div class="inputDiv">
+              &lt;input id="editMail" required type="email" placeholder="E-Mail" value="${contact.mail}">
+              &lt;img src="img/mail.svg">
+          &lt;/div>
+          &lt;div class="inputDiv">
+              &lt;input id="editPhone" required pattern="^[0-9]{5,20}$" type="text" placeholder="Phone" oninput="validateNumbers(this)" value="${contact.phone}">
+              &lt;img src="img/call.svg">
+          &lt;/div>
+          &lt;div class="addContactButtons">
+              &lt;button id="deleteButton" type="button" onclick="deleteContactByName('${contact.name}')">Delete&lt;/button>
+              &lt;button id="saveButton" type="submit">Save&lt;img src="img/check.svg">&lt;/button>
+          &lt;/div>
+      &lt;/form>
+  &lt;/div>
+  `;
+}
+
+/**
+ * This function updates the information of a specific contact.
+ *
+ * @param {number} contactId - The ID of the contact to be updated.
+ */
+async function updateContact(contactId) {
+  try {
+    contacts = JSON.parse(await getItem('contacts')) || [];
+
+    const indexToUpdate = contacts.findIndex(contact => contact.id === contactId);
+
+    if (indexToUpdate !== -1) {
+      const editedContact = {
+        id: contactId,
+        name: document.getElementById('editName').value,
+        mail: document.getElementById('editMail').value,
+        phone: document.getElementById('editPhone').value,
+        backgroundColor: contacts[indexToUpdate].backgroundColor
+      };
+
+      contacts[indexToUpdate] = editedContact;
+      await setItem('contacts', JSON.stringify(contacts));
+      closeCard();
+      openContact(contactId);
+      generateContacts();
+    } else {
+      console.error('Contact with ID ' + contactId + ' not found.');
+    }
+  } catch (e) {
+    console.error('Error updating contact:', e);
+  }
+}
+
+/**
+ * This function deletes the Contact choosen by the name
+ *
+ * @param {string} contactName - The name of the contact to be deleted.
+ */
+async function deleteContactByName(contactName) {
+  try {
+    contacts = JSON.parse(await getItem('contacts')) || [];
+
+    const indexToDelete = contacts.findIndex(contact => contact.name === contactName);
+
+    if (indexToDelete !== -1) {
+      contacts.splice(indexToDelete, 1);
+      await setItem('contacts', JSON.stringify(contacts));
+      closeCard();
+      location.reload();
+    } else {
+      console.error('Contact with name ' + contactName + ' not found.');
+    }
+  } catch (e) {
+    console.error('Error deleting contact:', e);
+  }
+
+  document.getElementById('contactContent').classList.add('displayNone');
+}
+
+async function getInitials() {
+  UserInitials = await getItem('userInitial');
+  UserName = await getItem('userName');
+  const kanban = document.getElementById("kanban");
+  kanban.innerHTML += `&lt;div onclick="displayOptions()" id="initials">
+      ${UserInitials}
+      &lt;/div>`;
+}
+
+function displayOptions() {
+  const options = document.getElementById("options");
+  options.style.display = '';
+  const isDisplayed = options.classList.toggle("dNone");
+
+  if (isDisplayed) {
+    document.getElementById('options').style.display = 'none';
+  }
+
+  if (isDisplayed &amp;&amp; !options.innerHTML.trim()) {
+    options.innerHTML = /*html*/`
+      &lt;div class="option">&lt;a href="/PrivacyPolicy/privacypolicy.html">Privacy Policy&lt;/a>&lt;/div>
+      &lt;div class="option">&lt;a href="/LegalNotice/legalnotice.html">Legal Notice&lt;/a>&lt;/div>
+      &lt;div class="option" onclick="goToLogin()">Log out&lt;/div>
+    `;
+  }
+
+}
+
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#LoginRegistered">LoginRegistered</a></li><li><a href="global.html#addContact">addContact</a></li><li><a href="global.html#addContactToTodo">addContactToTodo</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#addTask">addTask</a></li><li><a href="global.html#addTodo">addTodo</a></li><li><a href="global.html#allowDrop">allowDrop</a></li><li><a href="global.html#categoryDown">categoryDown</a></li><li><a href="global.html#categoryUp">categoryUp</a></li><li><a href="global.html#checkPasswords">checkPasswords</a></li><li><a href="global.html#clearInputs">clearInputs</a></li><li><a href="global.html#closeCard">closeCard</a></li><li><a href="global.html#closeContactInformation">closeContactInformation</a></li><li><a href="global.html#createCheckboxes">createCheckboxes</a></li><li><a href="global.html#createContact">createContact</a></li><li><a href="global.html#createTask">createTask</a></li><li><a href="global.html#deleteContactByName">deleteContactByName</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteTodo">deleteTodo</a></li><li><a href="global.html#displayFeedback">displayFeedback</a></li><li><a href="global.html#displayOptions">displayOptions</a></li><li><a href="global.html#displaySubtasks">displaySubtasks</a></li><li><a href="global.html#editContact">editContact</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editTodo">editTodo</a></li><li><a href="global.html#enableTheBtn">enableTheBtn</a></li><li><a href="global.html#filterTodos">filterTodos</a></li><li><a href="global.html#generateBackroundColor">generateBackroundColor</a></li><li><a href="global.html#generateBigCard">generateBigCard</a></li><li><a href="global.html#generateContacts">generateContacts</a></li><li><a href="global.html#generateKanbanHTML">generateKanbanHTML</a></li><li><a href="global.html#getCompletedSubtaskCount">getCompletedSubtaskCount</a></li><li><a href="global.html#getContactInitials">getContactInitials</a></li><li><a href="global.html#getContacts">getContacts</a></li><li><a href="global.html#getContactsBig">getContactsBig</a></li><li><a href="global.html#getContactsPic">getContactsPic</a></li><li><a href="global.html#getCurrentDate">getCurrentDate</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getItem">getItem</a></li><li><a href="global.html#getPriorityImage">getPriorityImage</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#getSubtaskCount">getSubtaskCount</a></li><li><a href="global.html#getTimeOfDay">getTimeOfDay</a></li><li><a href="global.html#greetingOnDailyTime">greetingOnDailyTime</a></li><li><a href="global.html#highlight">highlight</a></li><li><a href="global.html#includeHTML">includeHTML</a></li><li><a href="global.html#loadContacts">loadContacts</a></li><li><a href="global.html#loadTodos">loadTodos</a></li><li><a href="global.html#loadUsers">loadUsers</a></li><li><a href="global.html#loadtodoSums">loadtodoSums</a></li><li><a href="global.html#loginAsGuest">loginAsGuest</a></li><li><a href="global.html#moveCategoryDown">moveCategoryDown</a></li><li><a href="global.html#moveCategoryUp">moveCategoryUp</a></li><li><a href="global.html#moveTo">moveTo</a></li><li><a href="global.html#openCard">openCard</a></li><li><a href="global.html#openContact">openContact</a></li><li><a href="global.html#priorityLow">priorityLow</a></li><li><a href="global.html#priorityMedium">priorityMedium</a></li><li><a href="global.html#priorityUrgent">priorityUrgent</a></li><li><a href="global.html#registerUser">registerUser</a></li><li><a href="global.html#removeHighlight">removeHighlight</a></li><li><a href="global.html#saveTodo">saveTodo</a></li><li><a href="global.html#selectedPriority">selectedPriority</a></li><li><a href="global.html#setMinDate">setMinDate</a></li><li><a href="global.html#showContacts">showContacts</a></li><li><a href="global.html#startDraggin">startDraggin</a></li><li><a href="global.html#succesfullySignedUp">succesfullySignedUp</a></li><li><a href="global.html#updateAwaitFeedback">updateAwaitFeedback</a></li><li><a href="global.html#updateContact">updateContact</a></li><li><a href="global.html#updateDB">updateDB</a></li><li><a href="global.html#updateDone">updateDone</a></li><li><a href="global.html#updateHTML">updateHTML</a></li><li><a href="global.html#updateInProgress">updateInProgress</a></li><li><a href="global.html#updateStatusBasedOnCurrent">updateStatusBasedOnCurrent</a></li><li><a href="global.html#updateStatusBasedOnPrevious">updateStatusBasedOnPrevious</a></li><li><a href="global.html#updateSubtaskStatus">updateSubtaskStatus</a></li><li><a href="global.html#updateToDo">updateToDo</a></li><li><a href="global.html#validateNumbers">validateNumbers</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Mar 05 2024 13:41:36 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

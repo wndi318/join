@@ -1,0 +1,278 @@
+body{
+    margin: 0;
+    background-color: #4589FF;
+    font-family: 'Open Sans', sans-serif;
+}
+
+
+.join-logo-left-corner{
+    height: 121.97px;
+    width: 100.03px;
+    position: fixed;
+    top: 80px;
+    left: 77px;
+}
+
+.login-box-center{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 118px;
+    border-radius: 30px;
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
+    width: 418px;
+    height: 480px;
+    padding: 48px 88px 48px 88px;
+    background-color: white;
+    margin-top: 208px;
+}
+
+
+.left-arrow-inbox{
+    position: relative;
+    left: -153px;
+
+}
+
+.left-arrow-inbox img:hover{
+    border-radius: 50%;
+    scale: 1.1;
+    background-color: #005eff0f;
+}
+.signup-txt-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 39px;
+}
+
+.signup-txt-in-login-box{
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.underline-blue{
+    width: 150px;
+    border: solid 3px rgba(69, 137, 255, 1);
+    border-radius: 10px; 
+}
+
+/* Sign up box*/
+
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+form button{
+    width: 106px;
+    height: 43px;
+    border-radius: 8px;
+    background-color: #4589FF;
+    color: white;
+    border: none;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+}
+
+form button:hover{
+    cursor: pointer;
+}
+
+#back_to_login{
+    cursor: pointer;
+}
+
+.accept-the-terms{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.input{
+    width: 380px;
+    height: 24px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 12px 21px 12px 21px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid rgba(209, 209, 209, 1);
+    font-size: 19px;
+    font-weight: 400;
+
+}
+
+.input-name{
+    background: url(/imgs/person.png) no-repeat right;
+    background-size: 19px 19px;
+}
+
+.input-email{
+    background: url(/imgs/mail.png) no-repeat right;
+    background-size: 20px 16px;
+}
+
+.input-password{
+    background: url(/imgs/lock.png) no-repeat right;
+    background-size: 24px 24px;
+}
+
+.input-confirm-password{
+    background: url(/imgs/lock.png) no-repeat right;
+    background-size: 24px 24px;
+}
+
+.pp-inbox-link{
+    text-decoration: none;
+    color: #4589FF;
+}
+
+.pp-inbox-link:hover{
+    text-decoration: underline;
+    color: #4589FF;
+}
+
+.checkbox {
+    cursor: pointer;
+    accent-color: lightgreen;
+    height: 19px;
+    width: 19px;
+}
+
+.privacy-policy-and-legal-notice-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 55px;
+    column-gap: 35px;
+}
+
+.privacy-policy-and-legal-notice-container a{
+    text-decoration: none;
+    color: white;
+}
+
+.privacy-policy-and-legal-notice-container a:hover{
+    color: whitesmoke;
+    text-decoration: underline
+}
+
+/*Disable the Button*/
+
+.disabled-Button{
+    color: white;
+    opacity: 0.5;
+}
+
+.disabled-Button:hover{
+    cursor: not-allowed;
+}
+
+/*style the pop-up Button after succesfully sign-up*/
+
+#popup_after_succesfully_signup{
+    width: 326px;
+    height: 74px;
+    background-color: #4589FF;
+    color: white;
+    font-size: 23px;
+    font-weight: 400;
+    border-radius: 8px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+/*pop up if password match or not*/
+#result_password_match{
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 12px;
+}
+
+
+/*////Media-querry/////*/
+
+
+@media (max-width: 700px) {
+    
+    .login-box-center{
+        padding: 0;
+        width: 372px;
+        margin-top: 218px;
+        height: 472px;
+    }
+    
+    .signup-txt-in-login-box{
+        padding-right: 5px;
+        padding-top: 8px;
+    }
+
+     .underline-blue{
+        padding-right: 5px;
+     }
+
+     .signup-txt-container{
+        padding-right: 7px;
+        padding-top: 5px;
+        margin-bottom: 0;
+     }
+     
+     .input{
+        width: 312px;
+     }
+
+     .left-arrow-inbox{
+        left: -45px;
+     }
+
+     .join-logo-left-corner{
+        height: 78px;
+        width: 64px;
+        left: 37px;
+        right: 38px;
+     }
+ 
+}
+
+@media (max-width: 380px) {
+    .login-box-center {
+        width: 320px;
+    }
+
+    .input {
+        width: 200px;
+    }
+
+    .privacy-policy-and-legal-notice-container{
+        margin-top: 25px;
+        column-gap: 22px;
+    }
+}
+
+@media (max-width: 345px){
+    .login-box-center{
+        width: 300px;
+    }
+
+    .left-arrow-inbox{
+        left: -35px;
+    }
+
+    .login-box-center{
+        margin-top: 79px;
+    }
+
+}

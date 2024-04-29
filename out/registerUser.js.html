@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: registerUser.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: registerUser.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>let users = [];
+
+async function init() {
+    loadUsers();
+    checkPasswords();
+}
+
+
+/**
+ * this function load the users from the backend server
+ * loadUsers() - fetch the saved user from the backend server
+ **/
+async function loadUsers() {
+    try {
+        users = JSON.parse(await getItem('users'));
+    } catch (e) {
+        console.error("loading error!", e);
+    }
+}
+
+/**
+ * this function push the userinput to the backend server//
+ * @param {string} users - the Array users push the "user" = {name:, email:, password}
+ * 
+ **/
+async function registerUser() {
+    users.push({
+        name: sign_up_name.value,
+        email: sign_up_email.value.toLowerCase(),
+        password: sign_up_password.value,
+    });
+    await setItem('users', JSON.stringify(users));
+    resetUserInput();
+    succesfullySignedUp()
+}
+
+function resetUserInput() {
+    sign_up_name.value = '';
+    sign_up_email.value = '';
+    sign_up_password.value = '';
+    sign_up_confirm_pw.value = '';
+
+}
+
+
+/**
+ * this function pop-up a baner after signing up
+ * 
+ * @param {string} succes - this is the variable which is used to animate a pop-up banner after a user registration
+ **/
+function succesfullySignedUp() {
+    let success = document.getElementById('popup_after_succesfully_signup');
+    success.style.display = 'block';
+    success.style.transition = "top 0.5s ease, transform 0.5s ease";
+    setTimeout(() => {
+        success.style.top = "106%";
+    }, 1200);
+    setTimeout(() => {
+        success.style.bottom = "50%";
+    }, 2800);
+    setTimeout(() => {
+        success.style.display = "none";
+    }, 3200);
+    setTimeout(() => {
+        window.location.pathname = '/Login/login.html';
+    }, 3200);
+}
+
+
+/**
+ * this function is to check the password, if he match or dosent match
+ * 
+ * @param {string} password - this variable is where the user put his password init
+ * @param {string} passwordConfirm - in this variable confirm the user his password 
+ * @param {string} resultElement - this variable pop-up after the user is typing in the "password-confirm" field, if the password match = "Password does match!", if the Password not match "The Password does not match" in red color
+ * 
+ **/
+function checkPasswords() {
+    let password = document.getElementById('sign_up_password').value;
+    let passwordConfirm = document.getElementById('sign_up_confirm_pw').value;
+    let resultElement = document.getElementById('result_password_match');
+
+    if (password.length > 0 &amp;&amp; passwordConfirm.length > 0) {
+        if (password === passwordConfirm) {
+            resultElement.innerHTML = 'The Password match!';
+            resultElement.style.color = 'Green';
+        } else {
+            resultElement.innerHTML = 'The Password do not match!';
+            resultElement.style.color = 'Red';
+        }
+    } else {
+        resultElement.innerHTML = '';
+    }
+    document.getElementById('sign_up_password').addEventListener('input', checkPasswords);
+    document.getElementById('sign_up_confirm_pw').addEventListener('input', checkPasswords);
+
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#LoginRegistered">LoginRegistered</a></li><li><a href="global.html#addContact">addContact</a></li><li><a href="global.html#addContactToTodo">addContactToTodo</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#addTask">addTask</a></li><li><a href="global.html#addTodo">addTodo</a></li><li><a href="global.html#allowDrop">allowDrop</a></li><li><a href="global.html#categoryDown">categoryDown</a></li><li><a href="global.html#categoryUp">categoryUp</a></li><li><a href="global.html#checkPasswords">checkPasswords</a></li><li><a href="global.html#clearInputs">clearInputs</a></li><li><a href="global.html#closeCard">closeCard</a></li><li><a href="global.html#closeContactInformation">closeContactInformation</a></li><li><a href="global.html#createCheckboxes">createCheckboxes</a></li><li><a href="global.html#createContact">createContact</a></li><li><a href="global.html#createTask">createTask</a></li><li><a href="global.html#deleteContactByName">deleteContactByName</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteTodo">deleteTodo</a></li><li><a href="global.html#displayFeedback">displayFeedback</a></li><li><a href="global.html#displayOptions">displayOptions</a></li><li><a href="global.html#displaySubtasks">displaySubtasks</a></li><li><a href="global.html#editContact">editContact</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editTodo">editTodo</a></li><li><a href="global.html#enableTheBtn">enableTheBtn</a></li><li><a href="global.html#filterTodos">filterTodos</a></li><li><a href="global.html#generateBackroundColor">generateBackroundColor</a></li><li><a href="global.html#generateBigCard">generateBigCard</a></li><li><a href="global.html#generateContacts">generateContacts</a></li><li><a href="global.html#generateKanbanHTML">generateKanbanHTML</a></li><li><a href="global.html#getCompletedSubtaskCount">getCompletedSubtaskCount</a></li><li><a href="global.html#getContactInitials">getContactInitials</a></li><li><a href="global.html#getContacts">getContacts</a></li><li><a href="global.html#getContactsBig">getContactsBig</a></li><li><a href="global.html#getContactsPic">getContactsPic</a></li><li><a href="global.html#getCurrentDate">getCurrentDate</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getItem">getItem</a></li><li><a href="global.html#getPriorityImage">getPriorityImage</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#getSubtaskCount">getSubtaskCount</a></li><li><a href="global.html#getTimeOfDay">getTimeOfDay</a></li><li><a href="global.html#greetingOnDailyTime">greetingOnDailyTime</a></li><li><a href="global.html#highlight">highlight</a></li><li><a href="global.html#includeHTML">includeHTML</a></li><li><a href="global.html#loadContacts">loadContacts</a></li><li><a href="global.html#loadTodos">loadTodos</a></li><li><a href="global.html#loadUsers">loadUsers</a></li><li><a href="global.html#loadtodoSums">loadtodoSums</a></li><li><a href="global.html#loginAsGuest">loginAsGuest</a></li><li><a href="global.html#moveCategoryDown">moveCategoryDown</a></li><li><a href="global.html#moveCategoryUp">moveCategoryUp</a></li><li><a href="global.html#moveTo">moveTo</a></li><li><a href="global.html#openCard">openCard</a></li><li><a href="global.html#openContact">openContact</a></li><li><a href="global.html#priorityLow">priorityLow</a></li><li><a href="global.html#priorityMedium">priorityMedium</a></li><li><a href="global.html#priorityUrgent">priorityUrgent</a></li><li><a href="global.html#registerUser">registerUser</a></li><li><a href="global.html#removeHighlight">removeHighlight</a></li><li><a href="global.html#saveTodo">saveTodo</a></li><li><a href="global.html#selectedPriority">selectedPriority</a></li><li><a href="global.html#setMinDate">setMinDate</a></li><li><a href="global.html#showContacts">showContacts</a></li><li><a href="global.html#startDraggin">startDraggin</a></li><li><a href="global.html#succesfullySignedUp">succesfullySignedUp</a></li><li><a href="global.html#updateAwaitFeedback">updateAwaitFeedback</a></li><li><a href="global.html#updateContact">updateContact</a></li><li><a href="global.html#updateDB">updateDB</a></li><li><a href="global.html#updateDone">updateDone</a></li><li><a href="global.html#updateHTML">updateHTML</a></li><li><a href="global.html#updateInProgress">updateInProgress</a></li><li><a href="global.html#updateStatusBasedOnCurrent">updateStatusBasedOnCurrent</a></li><li><a href="global.html#updateStatusBasedOnPrevious">updateStatusBasedOnPrevious</a></li><li><a href="global.html#updateSubtaskStatus">updateSubtaskStatus</a></li><li><a href="global.html#updateToDo">updateToDo</a></li><li><a href="global.html#validateNumbers">validateNumbers</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Mar 05 2024 13:41:36 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="contacts.css">
+    <link rel="stylesheet" type="text/css" href="/fonts/fonts.css">
+    <link rel="stylesheet" type="text/css" href="/Templates/Menu/menu.css">
+    <link rel="stylesheet" href="/Summary/summary.css">
+    <link rel="icon" type="image/svg" href="img/favicon_join.svg">
+    <script src="/Templates/template.js"></script>
+    <script src="/storage.js"></script>
+    <script src="/Contacts/contacts.js"></script>
+    <script src="/Summary/summary.js"></script>
+    <title>Contacts</title>
+</head>
+
+<body onload="includeHTML(); loadContacts(); initBoard()">
+    <div w3-include-html="/Templates/Menu/menu.html"></div>
+    <div class="content">
+        <div class="allContacts" id="allContactsContainer">
+            <button id="addContact" onclick="addContact()">Add new contact <img src="img/person_add.svg"></button>
+            <div id="allContacts">
+            </div>
+        </div>
+        <div class="contactContent" id="contactContentContainer">
+                <div id="contactContent" class="displayNone">
+                </div>
+            <div style="display: none;" id="bg">
+                <div id="addNewContact" class="displayNone">
+                    <div class="addContactHeader">
+                        <button class="closeButton" onclick="closeCard()"><img src="img/close.svg"></button>
+                        <img class="addEditLogo" src="img/logo.svg">
+                        <h1>Add Contact</h1>
+                        <h2>Tasks are better with a Team!</h2>
+                    </div>
+                    <div class="addContactInfo">
+                        <form onsubmit="createContact(); return false;">
+                            <img src="img/icon.svg">
+                            <div class="inputDiv">
+                                <input type="text" required id="nameInput" placeholder="Name">
+                                <img src="img/person.svg">
+                            </div>
+                            <div class="inputDiv">
+                                <input type="email" required id="mail" placeholder="Email">
+                                <img src="img/mail.svg">
+                            </div>
+                            <div class="inputDiv">
+                                <input type="text" title="Type a valid phone number" pattern="^[0-9]{5,20}$" id="phone"
+                                    placeholder="Phone" oninput="validateNumbers(this)">
+                                <img src="img/call.svg">
+                            </div>
+                    </div>
+                    <div class="addContactButtons">
+                        <button id="cancel" type="button" onclick="closeCard()">Cancel</button>
+                        <button id="create" type="submit">Create Contact <img src="img/check.svg"></button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <div>
+                <div id="editContainer" class="displayNone">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

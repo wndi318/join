@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="summary.css">
+    <link rel="stylesheet" type="text/css" href="/fonts/fonts.css">
+    <link rel="stylesheet" type="text/css" href="/Templates/Menu/menu.css">
+    <link rel="icon" type="image/svg" href="img/favicon_join.svg">
+    <script src="/Templates/template.js"></script>
+    <script src="/storage.js"></script>
+    <script src="/AddTask/addTask.js"></script>
+    <script src="summary.js"></script>
+
+    <script src="/Login/login.js"></script>
+    <title>Summary</title>
+</head>
+
+<body onload="initSummary();">
+    <div w3-include-html="/Templates/Menu/menu.html"></div>
+
+    <div class="content-container">
+
+        <div class="greet-container">
+            <div class="flex-container">
+                <div class="timezone-container">
+                    <span id="timezone">Good morning,</span>
+                </div>
+                <div class="greetingname-container" id="greetingname"></div>
+            </div>
+
+            <div class="middle-section-container">
+                <div class="middle-section">
+                    <div class="task-urgent" onclick="goToBoard()">
+                        <div class="task-urgend-under-container">
+                            <div style="display: flex; align-items: center;">
+                                <img style="height: 76px; width: 76px;" src="/imgs/icon + circle.png">
+                                <div id="task_urgend_number" class="task-urgend-number"></div>
+                            </div>
+                            <span>Tasks Urgent</span>
+                        </div>
+
+                        <div class="white-column-urgent-task">
+                            <img src="/imgs/column-white-urgent-task.png">
+                        </div>
+
+                        <div class="date-container">
+                            <span id="currentDate"></span>
+                            <p>Upcoming Deadline</p>
+                        </div>
+                    </div>
+
+                    <div class="task-in-board" onclick="goToBoard()">
+                        <div class="task-in-board-under-container">
+                            <img style="height: 76px; width: 76px;" src="/imgs/task-in-board-img.png">
+                            <div id="Task-in-Board_value" class="task-in-board-number">5</div>
+                        </div>
+                        <span>Task in Board</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="under-task-section">
+                <div class="responisveSection">
+                    <div class="task-to-do" onclick="goToBoard()">
+                        <div class="under-container">
+                            <img src="/imgs/task-to-do-img.png">
+                            <div id="Tasks-ToDo-value" class="number-in-tasks">7</div>
+                        </div>
+                        <span>Task To-Do</span>
+                    </div>
+
+                    <div class="task-in-progress" onclick="goToBoard()">
+                        <div class="under-container">
+                            <img src="/imgs/task-in-progress-img.png">
+                            <div id="Task-in-Progress_value" class="number-in-tasks">2</div>
+                        </div>
+                        <span>Task in Progress</span>
+                    </div>
+                </div>
+                <div class="responisveSection">
+                    <div class="awaiting-feedback" onclick="goToBoard()">
+                        <div class="under-container">
+                            <img src="/imgs/awaiting-feedback-img.png">
+                            <div id="Awaiting-feedback_value" class="number-in-tasks">3</div>
+                        </div>
+                        <span>Awaiting Feedback</span>
+                    </div>
+
+                    <div class="tasks-done" onclick="goToBoard()">
+                        <div class="under-container">
+                            <img src="/imgs/task-done.png">
+                            <div id="Task-Done_value" class="number-in-tasks">4</div>
+                        </div>
+                        <span>Tasks Done</span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+
+
+
+
+
+
+
+</body>
+
+</html>
